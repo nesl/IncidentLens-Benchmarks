@@ -1,0 +1,263 @@
+{
+  "final_low_000001": {
+    "incident_id": "final_low_000001",
+    "final_name": "Eaton Fire",
+    "incident_type": "wildfire",
+    "location": "Pasadena, Los Angeles County, California",
+    "start_datetime_pacific": "2025-01-07T00:00:00",
+    "end_datetime_pacific": "2025-01-31T00:00:00",
+    "earliest_article_datetime_pacific": "2025-01-07T13:00:00"
+  },
+  "final_low_000002": {
+    "incident_id": "final_low_000002",
+    "final_name": "Palisades Fire",
+    "incident_type": "wildfire",
+    "location": "southeast of Palisades Drive in Pacific Palisades, CA",
+    "start_datetime_pacific": "2025-01-07T00:00:00",
+    "end_datetime_pacific": "2025-01-31T00:00:00",
+    "earliest_article_datetime_pacific": "2025-01-07T12:30:00"
+  },
+  "final_low_000004": {
+    "incident_id": "final_low_000004",
+    "final_name": "Hurst Fire",
+    "incident_type": "wildfire",
+    "location": "Hurst, Los Angeles area, California, USA",
+    "start_datetime_pacific": "2025-01-07T00:00:00",
+    "end_datetime_pacific": "2025-01-16T00:00:00",
+    "earliest_article_datetime_pacific": "2025-01-07T13:15:00"
+  },
+  "final_low_000005": {
+    "incident_id": "final_low_000005",
+    "final_name": "Lidia Fire",
+    "incident_type": "wildfire",
+    "location": "Epicenter / General Location: Near the 5700 block of Soledad Canyon Road in Acton, California.",
+    "start_datetime_pacific": "2025-01-08T00:00:00",
+    "end_datetime_pacific": "2025-01-11T00:00:00",
+    "earliest_article_datetime_pacific": "2025-01-09T19:15:00"
+  },
+  "final_low_000006": {
+    "incident_id": "final_low_000006",
+    "final_name": "Kenneth Fire",
+    "incident_type": "wildfire",
+    "location": "Victory Trailhead, West Hills, Los Angeles, California",
+    "start_datetime_pacific": "2025-01-09T00:00:00",
+    "end_datetime_pacific": "2025-01-12T00:00:00",
+    "earliest_article_datetime_pacific": "2025-01-09T18:30:00"
+  },
+  "final_low_000007": {
+    "incident_id": "final_low_000007",
+    "final_name": "Thousands of anti-ICE protesters block freeway, streets in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "101 Freeway between the 110 Freeway and Alameda Street, Downtown Los Angeles, Los Angeles, California",
+    "start_datetime_pacific": "2025-02-02T12:30:00",
+    "end_datetime_pacific": "2025-02-02T20:20:00",
+    "earliest_article_datetime_pacific": "2025-02-02T20:45:00"
+  },
+  "final_low_000008": {
+    "incident_id": "final_low_000008",
+    "final_name": "A Day Without Immigrants protest in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "Olympic Boulevard and Figueroa Street, Los Angeles, California, USA",
+    "start_datetime_pacific": "2025-05-01T00:00:00",
+    "end_datetime_pacific": "2025-05-01T00:00:00",
+    "earliest_article_datetime_pacific": "2025-05-01T00:00:00"
+  },
+  "final_low_000009": {
+    "incident_id": "final_low_000009",
+    "final_name": "Anti-ICE protest in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "Placita Olvera on Olvera Street, downtown Los Angeles, California",
+    "start_datetime_pacific": "2025-02-02T09:00:00",
+    "end_datetime_pacific": "2025-02-02T16:00:00",
+    "earliest_article_datetime_pacific": "2025-02-02T13:15:00"
+  },
+  "final_low_000011": {
+    "incident_id": "final_low_000011",
+    "final_name": "Tesla Takedown rally in West Los Angeles",
+    "incident_type": "civil protest",
+    "location": "outside a Tesla service center in West Los Angeles, Los Angeles, California",
+    "start_datetime_pacific": "2025-03-29T12:00:00",
+    "end_datetime_pacific": "2025-03-29T14:00:00",
+    "earliest_article_datetime_pacific": "2025-03-29T18:45:00"
+  },
+  "final_low_000012": {
+    "incident_id": "final_low_000012",
+    "final_name": "Hands Off! protest in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "Pershing Square to City Hall, downtown Los Angeles, California, USA",
+    "start_datetime_pacific": "2025-04-05T00:00:00",
+    "end_datetime_pacific": "2025-04-05T20:00:00",
+    "earliest_article_datetime_pacific": "2025-04-06T06:15:00"
+  },
+  "final_low_000013": {
+    "incident_id": "final_low_000013",
+    "final_name": "Hands Off! protest in Pasadena",
+    "incident_type": "civil protest",
+    "location": "El Paseo, Pasadena, California",
+    "start_datetime_pacific": "2025-04-05T00:00:00",
+    "end_datetime_pacific": "2025-04-05T15:00:00",
+    "earliest_article_datetime_pacific": "2025-04-08T00:45:00"
+  },
+  "final_low_000014": {
+    "incident_id": "final_low_000014",
+    "final_name": "protests against federal immigration raids in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "downtown Los Angeles, California, United States",
+    "start_datetime_pacific": "2025-06-06T00:00:00",
+    "end_datetime_pacific": "2025-06-07T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-09T12:00:00"
+  },
+  "final_low_000015": {
+    "incident_id": "final_low_000015",
+    "final_name": "Waymo driverless taxis burned during anti-ICE protests in downtown Los Angeles",
+    "incident_type": "urban fire",
+    "location": "North Los Angeles Street near Arcadia Street, downtown Los Angeles, Los Angeles, California",
+    "start_datetime_pacific": "2025-06-08T08:00:00",
+    "end_datetime_pacific": "2025-06-08T22:00:00",
+    "earliest_article_datetime_pacific": "2025-06-08T20:00:00"
+  },
+  "final_low_000016": {
+    "incident_id": "final_low_000016",
+    "final_name": "24 hours of community stoppage",
+    "incident_type": "civil protest",
+    "location": "MacArthur Park, Los Angeles, California, USA",
+    "start_datetime_pacific": "2025-08-12T10:00:00",
+    "end_datetime_pacific": "2025-08-12T19:00:00",
+    "earliest_article_datetime_pacific": "2025-08-12T00:00:00"
+  },
+  "final_low_000017": {
+    "incident_id": "final_low_000017",
+    "final_name": "Paramount protest disturbance during ICE immigration arrest protests",
+    "incident_type": "civil protest",
+    "location": "Paramount, California",
+    "start_datetime_pacific": "2025-06-07T00:00:00",
+    "end_datetime_pacific": "2025-06-08T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-11T08:00:00"
+  },
+  "final_low_000018": {
+    "incident_id": "final_low_000018",
+    "final_name": "Los Angeles anti-ICE protests",
+    "incident_type": "civil protest",
+    "location": "U.S. Highway 101/Alameda Street area, downtown Los Angeles, California, USA",
+    "start_datetime_pacific": "2025-06-06T00:00:00",
+    "end_datetime_pacific": "2025-06-07T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-09T12:00:00"
+  },
+  "final_low_000019": {
+    "incident_id": "final_low_000019",
+    "final_name": "Compton anti-ICE protest arson",
+    "incident_type": "civil protest",
+    "location": "Compton, California",
+    "start_datetime_pacific": "2025-06-07T00:00:00",
+    "end_datetime_pacific": "2025-06-08T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-09T13:15:00"
+  },
+  "final_low_000020": {
+    "incident_id": "final_low_000020",
+    "final_name": "Los Angeles protests",
+    "incident_type": "civil protest",
+    "location": "Los Angeles, California, United States",
+    "start_datetime_pacific": "2025-06-08T00:00:00",
+    "end_datetime_pacific": "2025-06-09T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-08T22:30:00"
+  },
+  "final_low_000021": {
+    "incident_id": "final_low_000021",
+    "final_name": "Paramount Boulevard immigration protest clash",
+    "incident_type": "civil protest",
+    "location": "6400 block of Paramount Boulevard, Paramount, Los Angeles County, California",
+    "start_datetime_pacific": "2025-06-07T10:00:00",
+    "end_datetime_pacific": "2025-06-07T23:00:00",
+    "earliest_article_datetime_pacific": "2025-06-08T00:00:00"
+  },
+  "final_low_000023": {
+    "incident_id": "final_low_000023",
+    "final_name": "Los Angeles freeway protest blockade on the 101 Freeway",
+    "incident_type": "civil protest",
+    "location": "Hollywood Freeway (US-101) near Downtown Los Angeles, Los Angeles, California",
+    "start_datetime_pacific": "2025-06-10T00:00:00",
+    "end_datetime_pacific": "2025-06-11T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-10T17:30:00"
+  },
+  "final_low_000024": {
+    "incident_id": "final_low_000024",
+    "final_name": "Whittier hotel protest",
+    "incident_type": "civil protest",
+    "location": "outside a Whittier hotel, Whittier, California, United States",
+    "start_datetime_pacific": "2025-06-11T00:00:00",
+    "end_datetime_pacific": "2025-06-12T00:00:00",
+    "earliest_article_datetime_pacific": "2025-06-11T22:00:00"
+  },
+  "final_low_000025": {
+    "incident_id": "final_low_000025",
+    "final_name": "Reclaim Our Street",
+    "incident_type": "civil protest",
+    "location": "Mariachi Plaza, Boyle Heights neighborhood, Los Angeles, California, USA",
+    "start_datetime_pacific": "2025-07-01T00:00:00",
+    "end_datetime_pacific": "2025-07-02T00:00:00",
+    "earliest_article_datetime_pacific": "2025-07-02T12:00:00"
+  },
+  "final_low_000026": {
+    "incident_id": "final_low_000026",
+    "final_name": "Reclaim Our Streets rally outside Crenshaw Dairy Mart",
+    "incident_type": "civil protest",
+    "location": "Crenshaw Dairy Mart, Crenshaw Boulevard, Inglewood, California",
+    "start_datetime_pacific": "2025-07-01T16:00:00",
+    "end_datetime_pacific": "2025-07-01T19:00:00",
+    "earliest_article_datetime_pacific": "2025-07-02T18:00:00"
+  },
+  "final_low_000027": {
+    "incident_id": "final_low_000027",
+    "final_name": "Anti-ICE protest outside City Hall on Spring Street, downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "outside City Hall on Spring Street, downtown Los Angeles, California",
+    "start_datetime_pacific": "2025-07-04T09:30:00",
+    "end_datetime_pacific": "2025-07-04T19:17:00",
+    "earliest_article_datetime_pacific": "2025-07-05T03:15:00"
+  },
+  "final_low_000028": {
+    "incident_id": "final_low_000028",
+    "final_name": "MacArthur Park immigration raid protest",
+    "incident_type": "civil protest",
+    "location": "MacArthur Park, Los Angeles, California",
+    "start_datetime_pacific": "2025-07-07T00:00:00",
+    "end_datetime_pacific": "2025-07-08T00:00:00",
+    "earliest_article_datetime_pacific": "2025-07-07T16:45:00"
+  },
+  "final_low_000029": {
+    "incident_id": "final_low_000029",
+    "final_name": "Occupy ICE LA",
+    "incident_type": "civil protest",
+    "location": "Outside the Metropolitan Detention Center, downtown Los Angeles, California",
+    "start_datetime_pacific": "2025-07-11T00:00:00",
+    "end_datetime_pacific": "2025-07-12T00:00:00",
+    "earliest_article_datetime_pacific": "2025-07-18T05:30:00"
+  },
+  "final_low_000035": {
+    "incident_id": "final_low_000035",
+    "final_name": "ICE Out Everywhere protests at the Metropolitan Detention Center in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "Metropolitan Detention Center / Alameda Street between Union Station and First Street, downtown Los Angeles, California",
+    "start_datetime_pacific": "2026-01-30T00:00:00",
+    "end_datetime_pacific": "2026-01-31T00:00:00",
+    "earliest_article_datetime_pacific": "2026-01-31T00:30:00"
+  },
+  "final_low_000036": {
+    "incident_id": "final_low_000036",
+    "final_name": "National Shutdown protest in downtown Los Angeles",
+    "incident_type": "civil protest",
+    "location": "downtown Los Angeles, California",
+    "start_datetime_pacific": "2026-01-30T00:00:00",
+    "end_datetime_pacific": "2026-01-31T21:20:00",
+    "earliest_article_datetime_pacific": "2026-01-30T23:00:00"
+  },
+  "final_low_000037": {
+    "incident_id": "final_low_000037",
+    "final_name": "Downtown Los Angeles anti-ICE student walkouts and demonstrations",
+    "incident_type": "civil protest",
+    "location": "Downtown Los Angeles, especially near the Metropolitan Detention Center and City Hall",
+    "start_datetime_pacific": "2026-02-13T00:00:00",
+    "end_datetime_pacific": "2026-02-14T00:00:00",
+    "earliest_article_datetime_pacific": "2026-02-13T4:00:00"
+  }
+}

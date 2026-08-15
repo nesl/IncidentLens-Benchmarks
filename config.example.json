@@ -1,0 +1,20 @@
+{
+  "save_folder": "${INCIDENTLENS_PULLED_DATA_ROOT}",
+  "paths": {
+    "raw_archive_root": "${INCIDENTLENS_RAW_ARCHIVE_ROOT}",
+    "evaluation_temp_root": "${INCIDENTLENS_EVALUATION_TEMP_ROOT}",
+    "simulator_output_root": "${INCIDENTLENS_SIMULATOR_OUTPUT_ROOT}",
+    "runtime_root": "${INCIDENTLENS_RUNTIME_ROOT}",
+    "results_root": "${INCIDENTLENS_RESULTS_ROOT}",
+    "observation_cache_root": "${INCIDENTLENS_OBSERVATION_CACHE_ROOT}",
+    "real_observation_cache_root": "${INCIDENTLENS_REAL_OBSERVATION_CACHE_ROOT}"
+  },
+  "openai": {"api": "${OPENAI_API_KEY}"},
+  "llm_host": {"uri": "http://localhost:8001/v1"},
+  "langsmith": {"api": "${LANGSMITH_API_KEY}"},
+  "google": {"api": "${GOOGLE_API_KEY}"},
+  "img_edit": {"api": "${GOOGLE_API_KEY}", "status": "enabled"},
+  "google_places_key": {"key": "${GOOGLE_PLACES_API_KEY}"},
+  "neo4j_config": {"uri": "bolt://localhost:7687", "username": "neo4j", "password": "${NEO4J_PASSWORD}"},
+  "mcp": {"simulation": {"host": "127.0.0.1", "port": "8002", "path": "/mcp"}}
+}

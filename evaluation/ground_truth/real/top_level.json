@@ -1,0 +1,57 @@
+{
+  "top_000000": {
+    "top_level_incident_id": "top_000000",
+    "top_level_incident_name": "Los Angeles wildfires",
+    "low_level_incident_ids": [
+      "final_low_000002",
+      "final_low_000001",
+      "final_low_000004",
+      "final_low_000005",
+      "final_low_000006"
+    ],
+    "start_datetime_pacific": "2025-01-07T00:00:00",
+    "end_datetime_pacific": "2025-01-31T00:00:00",
+    "incident_types": [
+      "wildfire"
+    ],
+    "reason": "These are distinct January 2025 Los Angeles-area wildfire incidents that belong under the Los Angeles wildfires family. Excluded the parent node itself and the ambiguous Zuma Beach area wildfire, which is not clearly part of this specific complex."
+  },
+  "top_000001": {
+    "top_level_incident_id": "top_000001",
+    "top_level_incident_name": "Los Angeles anti-ICE protests",
+    "low_level_incident_ids": [
+      "final_low_000018",
+      "final_low_000019",
+      "final_low_000022",
+      "final_low_000027",
+      "final_low_000007",
+      "final_low_000009",
+      "final_low_000021",
+      "final_low_000023",
+      "final_low_000025",
+      "final_low_000028",
+      "final_low_000030",
+      "final_low_000034",
+      "final_low_000035",
+      "final_low_000036",
+      "final_low_000037",
+      "final_low_000010",
+      "final_low_000014",
+      "final_low_000017",
+      "final_low_000031",
+      "final_low_000032",
+      "final_low_000020",
+      "final_low_000024",
+      "final_low_000026",
+      "final_low_000008",
+      "final_low_000012",
+      "final_low_000016"
+    ],
+    "start_datetime_pacific": "2025-01-19T12:30:00",
+    "end_datetime_pacific": "2026-01-31T21:20:00",
+    "incident_types": [
+      "civil protest"
+    ],
+    "reason": "The candidate parent is valid and has many concrete Los Angeles-area protest occurrences tied to ICE, immigration raids, deportation, or National Guard deployment. I excluded clearly unrelated protest families and non-ICE protest items."
+  }
+}
