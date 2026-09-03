@@ -7,7 +7,10 @@ name = "incidentlens-benchmarks"
 version = "0.1.0"
 description = "Simulator, replay emitters, baselines, and evaluation for IncidentLens"
 requires-python = ">=3.10"
-dependencies = ["incidentlens>=0.1", "urban-observations>=0.1"]
+dependencies = [
+    "incidentlens>=0.1",
+    "urban-observations>=0.1,<1",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]

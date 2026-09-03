@@ -40,7 +40,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Iterable, Iterator, List, Mapping, Optional, Sequence, Tuple
-from observation_contract import normalize_report
+from detection.report import normalize_report
 from utilities.util import get_config
 
 try:
@@ -104,7 +104,7 @@ ROW_TIME_KEYS = {"timestamp", "time", "date", "datetime", "dt_txt"}
 # Source/date profile cache.  This is separate from the extraction cache:
 # extraction caching avoids re-untarring TARs, while this avoids rebuilding the
 # normalized report list by walking/opening thousands of CCTV images on every run.
-PROFILE_REPORT_CACHE_VERSION = 1
+PROFILE_REPORT_CACHE_VERSION = 2
 DEFAULT_PROFILE_REPORT_CACHE_DIRNAME = "_real_emitter_profile_cache"
 
 # PeMS station metadata cache.  PeMS rows only contain station IDs; each
@@ -152,6 +152,8 @@ TEXT_TIME_KEYS = tuple(sorted(ROW_TIME_KEYS | {
     "published at",
     "event_date",
     "event date",
+    "received_at",
+    "ingested_at",
 }))
 
 
@@ -2864,7 +2866,7 @@ def profile_weather(
 
 
 def generic_sensor_id_from_record(record: Dict[str, Any], fallback: str) -> str:
-    for key in ("sensor_id", "station_id", "device_id", "post_id", "username", "user", "id", "location", "location_name", "Location"):
+    for key in ("sensor_id", "station_id", "device_id", "post_id", "imap_uid", "message_id", "username", "user", "id", "location", "location_name", "Location"):
         value = record_get_ci(record, key)
         if value is not None and value != "":
             return str(value)
@@ -2954,6 +2956,9 @@ def profile_generic_source(
                         "source_row_index": row_index,
                         "real_data": True,
                     }
+                    schema_version = record_get_ci(row, "schema_version")
+                    if schema_version:
+                        metadata["source_schema_version"] = str(schema_version)
                     if raw_location_text:
                         metadata["raw_text_location"] = raw_location_text
                     if resolved_location is not None:

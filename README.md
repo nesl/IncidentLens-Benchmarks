@@ -1,328 +1,169 @@
 # IncidentLens Benchmarks
 
-This repository contains the reproducibility infrastructure for IncidentLens:
-synthetic incident generation, real-data replay, baseline orchestration,
-ground-truth labels, and result evaluation.
+This repository contains IncidentLens simulation, replay, ground truth, and
+evaluation tools. The detector itself lives in `incidentlens`; collection and
+shared enrichment live in `urban-observations`.
 
-The associated IncidentLens paper is included at
-[`docs/incidentlens.pdf`](docs/incidentlens.pdf). The detector itself lives in
-the separate `incidentlens` repository.
+Ground truth remains here and is never sent to IncidentLens or SIGMUS.
 
-## How the repositories work together
+## Repository roles
 
-- `urban-observations` provides the normalized `REPORT` schema.
-- `incidentlens` receives report streams and writes predictions.
-- `incidentlens-benchmarks` owns simulator plans, emitters, labels, experiment
-  scheduling, and metrics.
+| Repository | Responsibility |
+| --- | --- |
+| `urban-observations` | Common observation model, receiver, and enrichment |
+| `incidentlens` | Detection and optional visualization |
+| `incidentlens-benchmarks` | Synthetic generation, replay, labels, and evaluation |
 
-Ground truth is never sent to the detector. Synthetic plans and real labels
-remain in this repository while emitters send only normalized observations and
-sensor metadata.
+## Install
 
-## Requirements and installation
-
-Use Python 3.10 or newer. Clone `urban-observations`, `incidentlens`, and this
-repository as sibling directories, then create one shared environment from
-their parent directory:
+Clone all three repositories as siblings and use a benchmark-specific Python
+3.10 or newer environment:
 
 ```bash
 python3.10 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip setuptools wheel
-
-python -m pip install --no-deps -e ./urban-observations
-python -m pip install -r ./incidentlens/requirements.txt
-python -m pip install --no-deps -e ./incidentlens
-python -m pip install -r ./incidentlens-benchmarks/requirements.txt
-python -m pip install --no-deps -e ./incidentlens-benchmarks
+python -m pip install -e ../urban-observations
+python -m pip install -e ../incidentlens
+python -m pip install -e .
 ```
 
-The simulator can make paid OpenAI and Google model/API calls. Evaluation of
-existing result files is local unless geographic matching is configured to
-geocode uncached textual locations.
-
-## Configure paths and credentials
-
-From `incidentlens-benchmarks/`:
+Create the private configuration:
 
 ```bash
 cp config.example.json config.json
-cp .env.example .env
-chmod 600 config.json .env
+chmod 600 config.json
 ```
 
-Edit `.env` and use absolute paths:
+`config.json` is ignored by Git. Put API keys directly in it only when using
+the simulator or evaluation features that require them.
 
-```dotenv
-OPENAI_API_KEY=your_openai_api_key
-LANGSMITH_API_KEY=
-GOOGLE_API_KEY=your_google_genai_key
-GOOGLE_PLACES_API_KEY=your_google_maps_geocoding_key
-NEO4J_PASSWORD=your_neo4j_password
-INCIDENTLENS_RAW_ARCHIVE_ROOT=/mnt/urban-backup/raw
-INCIDENTLENS_PULLED_DATA_ROOT=/mnt/urban-data/pulled_data
-INCIDENTLENS_EVALUATION_TEMP_ROOT=/mnt/incidentlens/evaluation-temp
-INCIDENTLENS_SIMULATOR_OUTPUT_ROOT=/mnt/incidentlens/simulator-output
-INCIDENTLENS_RUNTIME_ROOT=/mnt/incidentlens/runtime
-INCIDENTLENS_RESULTS_ROOT=/mnt/incidentlens/results
-INCIDENTLENS_OBSERVATION_CACHE_ROOT=/mnt/incidentlens/cache/by_incident
-INCIDENTLENS_REAL_OBSERVATION_CACHE_ROOT=/mnt/incidentlens/cache/real_data
+## Configure replay
+
+The `replay` section controls where data comes from and where it is sent:
+
+```json
+{
+  "replay": {
+    "dataset_root": "/absolute/path/to/batch_incident_runs",
+    "recursive": true,
+    "interval_seconds": 0.0,
+    "output": null,
+    "mapping_output": null,
+    "receiver": {
+      "enabled": true,
+      "host": "127.0.0.1",
+      "port": 8766,
+      "timeout_seconds": 180.0
+    }
+  }
+}
 ```
 
-`OPENAI_API_KEY` drives the simulator and IncidentLens model.
-`GOOGLE_API_KEY` is used for cloud image editing, while
-`GOOGLE_PLACES_API_KEY` is used for geocoding. `LANGSMITH_API_KEY` can remain
-empty. Neo4j is used by simulator tool workflows; it is not needed to calculate
-metrics from existing results.
+- `dataset_root` may be one simulator run or a directory containing runs.
+- `receiver.host` and `receiver.port` identify the Urban Observations receiver.
+- `interval_seconds: 0` replays at maximum speed.
+- `output` optionally writes the portable observations to local JSONL.
+- `mapping_output` optionally writes a private ground-truth mapping for later
+  evaluation.
 
-Load configuration in every terminal:
+Command-line options override these values for one run.
+
+## Replay synthetic data
+
+Start the common receiver and enrichment service first:
 
 ```bash
-set -a
-. ./.env
-set +a
-export URBAN_SYSTEM_CONFIG="$PWD/config.json"
+cd ../urban-observations
+./docker-start processing-up
 ```
 
-The same environment is inherited when `evaluation.run_experiments` launches
-IncidentLens as a child process. `.env` and `config.json` are ignored by Git.
-
-## Test both projects together
-
-Run the repository tests:
+Then run the configured replay:
 
 ```bash
-python -m unittest discover -s tests -v
+cd ../incidentlens-benchmarks
+python -m evaluation.synthetic_observations
 ```
 
-Then verify that the orchestrator can construct a paired detector/emitter run
-without starting services or calling APIs:
+The emitter converts text, time-series records, and images into the same inline
+`urban-observation.v1` model used by real data. It sends one observation and
+waits for one acknowledgement, providing simple backpressure. IncidentLens and
+SIGMUS independently follow the enriched JSONL produced by Urban Observations.
+
+Useful one-run overrides include:
 
 ```bash
-python -m evaluation.run_experiments \
-  --exp-type synth \
-  --only-baseline direct_observation \
-  --no-include-composition \
-  --dry-run \
-  --no-progress-bar
+# Replay another dataset
+python -m evaluation.synthetic_observations /path/to/another/batch
+
+# Validate conversion locally without using the receiver
+python -m evaluation.synthetic_observations \
+  --no-receiver --output /tmp/observations.jsonl --limit 10
+
+# Send to a different receiver
+python -m evaluation.synthetic_observations \
+  --receiver-host 192.0.2.10 --receiver-port 8766
 ```
 
-The dry run prints the exact `detection.full_pipeline` and
-`evaluation.synthetic_emitter` commands it would launch.
+On the original deployment, the full synthetic archive is under:
+
+```text
+/mnt/sandia-backup/incidentlens-generated-archive/generated/batch_incident_runs/
+```
 
 ## Generate synthetic data
 
-First inspect a small plan without loading configuration or calling services:
+Inspect a small generation plan without calling external services:
 
 ```bash
 python -m simulator.simulator \
-  --incident-types wildfire \
-  --runs-per-incident 1 \
-  --output-folder smoke \
-  --max-iterations 1 \
-  --dry-run
-```
-
-Remove `--dry-run` to generate it:
-
-```bash
-python -m simulator.simulator \
-  --incident-types wildfire \
-  --runs-per-incident 1 \
-  --output-folder smoke \
-  --max-iterations 1
-```
-
-For a minimal multimodal smoke run containing CCTV image, weather time-series,
-and news text observations, use an isolated output root:
-
-```bash
-SIMULATOR_INSIDE_SENSORS_PER_REGION=1 \
-SIMULATOR_OUTSIDE_SENSORS_ENABLED=false \
-SIMULATOR_MAX_IMAGE_EDITS_PER_STEP=1 \
-python -m simulator.simulator \
-  --incident-types wildfire \
-  --runs-per-incident 1 \
-  --output-root /tmp/incidentlens-synthetic-smoke \
-  --output-folder one-each \
-  --max-iterations 1 \
-  --sources cctv weather news
-```
-
-`--sources` is intended for reproducible smoke tests. Without it, the planning
-model selects sources appropriate to each simulated incident step.
-The image editor defaults to the generally available `gemini-2.5-flash-image`;
-set `SIMULATOR_IMAGE_EDIT_MODEL` if your Google Cloud project uses another
-compatible image-editing model.
-
-Output is written beneath `${INCIDENTLENS_SIMULATOR_OUTPUT_ROOT}`:
-
-```text
-smoke/
-├── batch_run_schedule.json
-└── wildfire1/
-    ├── observations.txt
-    ├── *_gt_*.json
-    ├── *_plan.json
-    └── generated image, time-series, and text files
-```
-
-Simulation uses external models and may incur cost. Image generation/editing
-can be disabled for a run with:
-
-```bash
-SIMULATOR_SIMULATE_IMAGES=false python -m simulator.simulator \
   --incident-types wildfire --runs-per-incident 1 \
-  --output-folder smoke-no-images --max-iterations 1
+  --output-folder smoke --max-iterations 1 --dry-run
 ```
 
-Validate generated ground-truth geometry:
+Remove `--dry-run` to generate the data. Generation can use OpenAI, Google, and
+geocoding APIs and may incur cost. Output is written below
+`paths.simulator_output_root`.
 
-```bash
-python -m simulator.tools.validate_data \
-  --root "$INCIDENTLENS_SIMULATOR_OUTPUT_ROOT/smoke" \
-  --fail-on-invalid
-```
+## Real-data experiments
 
-## Replay synthetic data without IncidentLens
-
-This converts simulator observations into versioned normalized reports without
-opening a socket:
-
-```bash
-python -m evaluation.synthetic_emitter \
-  --batch-root "$INCIDENTLENS_SIMULATOR_OUTPUT_ROOT/smoke" \
-  --recursive-discovery \
-  --no-emit-to-socket \
-  --write-reports-to-incident-folders \
-  --no-display-ground-truth \
-  --no-display-sensor-locations
-```
-
-## Run a paired synthetic experiment
-
-`run_experiments` starts IncidentLens, waits for its TCP socket, runs the
-emitter, captures logs, and stops the detector when the stream completes.
-For a generated batch:
-
-```bash
-python -m evaluation.run_experiments \
-  --exp-type synth \
-  --only-baseline incidentlens \
-  --no-include-composition \
-  --low-level-batch-root "$INCIDENTLENS_SIMULATOR_OUTPUT_ROOT/smoke" \
-  --low-level-incident-types evaluation/incident_list_synth_batch.txt \
-  --low-level-results-folder smoke
-```
-
-Use `--only-baseline direct_observation` for a simpler baseline run. Child logs
-are stored under `evaluation/experiment_logs/`. Predictions are written under
-`${INCIDENTLENS_RESULTS_ROOT}/<method>/<experiment>/`.
-
-## Real-data archive and replay
-
-The immutable archive uses one TAR per source and date:
+The raw archive is expected to contain one TAR per source and date:
 
 ```text
-${INCIDENTLENS_RAW_ARCHIVE_ROOT}/
-├── air_data/YYYYMMDD.tar
-├── alertcalifornia/YYYYMMDD.tar
-├── cctv/YYYYMMDD.tar
-├── citizen_data/YYYYMMDD.tar
-├── gkg/YYYYMMDD.tar
-├── pem_data_chp_incidents_day/YYYYMMDD.tar
-├── pem_data_station_5min/YYYYMMDD.tar
-├── twitter_data/YYYYMMDD.tar
-└── weather_data/YYYYMMDD.tar
+<paths.raw_archive_root>/<source>/YYYYMMDD.tar
 ```
 
-`evaluation.real_emitter` can extract requested TARs into:
+`evaluation.real_emitter` prepares and normalizes historical data, while
+`evaluation.run_experiments` coordinates historical benchmark runs. These are
+reproduction tools for the older experiments; the current live path uses the
+common Urban Observations receiver.
 
-```text
-${INCIDENTLENS_EVALUATION_TEMP_ROOT}/<source>/YYYYMMDD/...
-```
-
-Profile and normalize one date without sending it to IncidentLens:
+Inspect their options before a run:
 
 ```bash
-python -m evaluation.real_emitter \
-  --dates 20250110 \
-  --raw-root "$INCIDENTLENS_RAW_ARCHIVE_ROOT" \
-  --temp-root "$INCIDENTLENS_EVALUATION_TEMP_ROOT" \
-  --auto-prepare-temp-data \
-  --no-emit-to-socket \
-  --write-ordered-reports-jsonl
-```
-
-For automated real experiments, inspect all options with:
-
-```bash
+python -m evaluation.real_emitter --help
 python -m evaluation.run_experiments --help
 ```
 
-## Ground truth
-
-The authoritative real low-level labels are:
-
-```text
-evaluation/ground_truth/real/low_level_gt_corrected.json
-```
-
-Each entry records an incident ID and name, canonical type, textual location,
-active start/end datetimes, and earliest external article datetime. Real
-composition labels are in:
-
-```text
-evaluation/ground_truth/real/top_level.json
-```
-
-`evaluation/filtered_incidents.txt` is the allowed detector vocabulary, not a
-label file. Keeping labels in this repository prevents the detector from
-accessing ground truth during replay.
-
 ## Evaluate results
 
-Evaluate synthetic low-level predictions:
+Ground-truth files are under `evaluation/ground_truth/`. Evaluate existing
+results with:
 
 ```bash
-python -m evaluation.evaluate_results \
-  --mode low_incident \
-  --results-root "$INCIDENTLENS_RESULTS_ROOT" \
-  --gt-roots "$INCIDENTLENS_SIMULATOR_OUTPUT_ROOT/smoke" \
-  --incident-types evaluation/incident_list_synth_batch.txt \
-  --output-dir evaluation/evaluation_summary
+python -m evaluation.evaluate_results --help
 ```
 
-Evaluate real-data predictions against the tracked labels:
+The evaluator supports synthetic and real low-level incidents, compositions,
+coverage, ablation, and performance experiments. Outputs are written below the
+selected evaluation directory.
+
+## Check the installation
 
 ```bash
-python -m evaluation.evaluate_results \
-  --mode low_real \
-  --results-root "$INCIDENTLENS_RESULTS_ROOT" \
-  --real-gt-path evaluation/ground_truth/real/low_level_gt_corrected.json \
-  --real-no-spatial-matching \
-  --no-real-geocode-gt-locations \
-  --output-dir evaluation/evaluation_summary
+python -m unittest discover -s tests -v
+python -m evaluation.synthetic_observations --help
 ```
 
-Those two flags provide an offline type-and-time evaluation. Omit them when you
-want spatial matching and localization metrics; that mode uses the configured
-geocoding services or an existing geographic cache.
-
-The evaluator writes JSON and CSV summaries beneath the selected output
-directory. Use `python -m evaluation.evaluate_results --help` for composition,
-coverage, ablation, throughput, and scalability modes.
-
-## Troubleshooting
-
-- `No module named detection`: install the sibling IncidentLens checkout in the
-  active environment.
-- `No module named observation_contract`: install the sibling Urban
-  Observations checkout.
-- Missing configuration variable: load `.env` with `set -a` before sourcing it.
-- Socket connection refused: start IncidentLens first or use
-  `evaluation.run_experiments`, which manages process order.
-- No synthetic runs discovered: pass the directory containing incident folders
-  and add `--recursive-discovery` when runs are nested more deeply.
-- No real observations found: verify the exact
-  `<raw-root>/<source>/YYYYMMDD.tar` layout.
+If replay reports a refused connection, confirm that Urban Observations
+processing is running and that the configured host and port match its receiver.

@@ -35,7 +35,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterator, Optional, Sequence, Tuple
 
-from observation_contract import normalize_report
+from detection.report import normalize_report
 
 try:
     from tqdm.auto import tqdm  # type: ignore
