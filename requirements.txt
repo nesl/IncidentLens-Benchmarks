@@ -1,14 +1,8 @@
 beautifulsoup4
-fastmcp
-google-genai
 googlemaps
 geopandas
 langchain
-langchain-community
-langchain-mcp-adapters
-langgraph
 lxml-html-clean
-neo4j==5.26.0
 numpy
 openai
 osmnx
@@ -16,7 +10,6 @@ pandas
 Pillow
 pydantic
 requests
-requests-html
 selenium
 sentence-transformers
 shapely

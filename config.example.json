@@ -1,33 +1,16 @@
 {
-  "save_folder": "/absolute/path/to/pulled-data",
   "paths": {
     "raw_archive_root": "/absolute/path/to/raw-archive",
     "evaluation_temp_root": "./evaluation/temp",
-    "simulator_output_root": "/absolute/path/to/simulator-output",
-    "runtime_root": "./runtime",
-    "results_root": "./results",
-    "observation_cache_root": "./cache/by_incident",
     "real_observation_cache_root": "./cache/real_data"
   },
-  "replay": {
-    "dataset_root": "/absolute/path/to/simulator-output/batch_incident_runs",
-    "recursive": true,
-    "interval_seconds": 0.0,
-    "output": null,
-    "mapping_output": null,
-    "receiver": {
-      "enabled": true,
-      "host": "127.0.0.1",
-      "port": 8766,
-      "timeout_seconds": 180.0
-    }
+  "openai": {
+    "api": "replace_me"
   },
-  "openai": {"api": "replace_me"},
-  "llm_host": {"uri": "http://localhost:8001/v1"},
-  "langsmith": {"api": ""},
-  "google": {"api": "replace_me"},
-  "img_edit": {"api": "replace_me", "status": "enabled"},
-  "google_places_key": {"key": "replace_me"},
-  "neo4j_config": {"uri": "bolt://localhost:7687", "username": "neo4j", "password": "replace_me"},
-  "mcp": {"simulation": {"host": "127.0.0.1", "port": "8002", "path": "/mcp"}}
+  "langsmith": {
+    "api": ""
+  },
+  "google_places_key": {
+    "key": "replace_me"
+  }
 }
